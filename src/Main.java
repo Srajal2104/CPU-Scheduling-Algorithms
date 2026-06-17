@@ -2,6 +2,8 @@ import algorithms.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import models.Process;
+import utils.GanttChart;
+import utils.ResultWriter;
 
 
 
@@ -12,7 +14,6 @@ public class Main {
 
 
         try(Scanner sc = new Scanner(System.in)) {
-
 
 
             ArrayList<Process> processes =
@@ -48,7 +49,7 @@ public class Main {
 
 
                 System.out.println(
-                "\nProcess "+i
+                "\nProcess " + i
                 );
 
 
@@ -56,7 +57,7 @@ public class Main {
                 "Arrival Time : "
                 );
 
-                int at=sc.nextInt();
+                int at = sc.nextInt();
 
 
 
@@ -64,7 +65,7 @@ public class Main {
                 "Burst Time : "
                 );
 
-                int bt=sc.nextInt();
+                int bt = sc.nextInt();
 
 
 
@@ -72,16 +73,24 @@ public class Main {
                 "Priority : "
                 );
 
-                int pr=sc.nextInt();
+                int pr = sc.nextInt();
+
 
 
 
                 processes.add(
-                new Process(i,at,bt,pr)
+                    new Process(
+                        i,
+                        at,
+                        bt,
+                        pr
+                    )
                 );
 
 
             }
+
+
 
 
 
@@ -91,61 +100,20 @@ public class Main {
             );
 
 
-            System.out.println(
-            "1. FCFS"
-            );
-
-            System.out.println(
-            "2. Round Robin"
-            );
-
-            System.out.println(
-            "3. SJF"
-            );
-
-            System.out.println(
-            "4. SRT"
-            );
-
-            System.out.println(
-            "5. Priority Scheduling"
-            );
-
-            System.out.println(
-            "6. HRRN"
-            );
-
-            System.out.println(
-            "7. Multilevel Queue"
-            );
-
-            System.out.println(
-            "8. MLFQ"
-            );
-
-            System.out.println(
-            "9. Feedback Queue 1"
-            );
-
-            System.out.println(
-            "10. Feedback Queue 2i"
-            );
-
-            System.out.println(
-            "11. Lottery Scheduling"
-            );
-
-            System.out.println(
-            "12. Aging"
-            );
-
-            System.out.println(
-            "13. EDF"
-            );
-
-            System.out.println(
-            "14. Rate Monotonic"
-            );
+            System.out.println("1. FCFS");
+            System.out.println("2. Round Robin");
+            System.out.println("3. SJF");
+            System.out.println("4. SRT");
+            System.out.println("5. Priority Scheduling");
+            System.out.println("6. HRRN");
+            System.out.println("7. Multilevel Queue");
+            System.out.println("8. MLFQ");
+            System.out.println("9. Feedback Queue 1");
+            System.out.println("10. Feedback Queue 2i");
+            System.out.println("11. Lottery Scheduling");
+            System.out.println("12. Aging");
+            System.out.println("13. EDF");
+            System.out.println("14. Rate Monotonic");
 
 
 
@@ -168,6 +136,7 @@ public class Main {
 
 
                 case 2 -> {
+
 
                     System.out.print(
                     "Enter Time Quantum : "
@@ -243,26 +212,157 @@ public class Main {
 
 
 
+
                 default -> {
 
                     System.out.println(
-                    "Invalid choice"
+                    "Invalid Choice"
                     );
 
                     yield null;
 
                 }
 
+
             };
+
 
 
 
 
             if(scheduler != null){
 
+
+
                 scheduler.schedule(processes);
 
+
+
+
+                String algorithmName =
+                scheduler.getClass()
+                .getSimpleName();
+
+
+
+
+                StringBuilder result =
+                new StringBuilder();
+
+
+
+
+
+                result.append(
+                "====================================\n"
+                );
+
+
+                result.append(
+                " CPU SCHEDULING RESULT\n"
+                );
+
+
+                result.append(
+                "====================================\n\n"
+                );
+
+
+
+                result.append(
+                "Algorithm : "
+                )
+                .append(algorithmName)
+                .append("\n\n");
+
+
+
+
+
+                // GANTT CHART SAVE
+
+                result.append(
+                GanttChart.generate(
+                    scheduler.getChart()
+                )
+                );
+
+
+
+
+
+                result.append(
+                "\nProcess Details\n"
+                );
+
+                result.append(
+                "------------------------------------\n"
+                );
+
+
+
+                result.append(
+                "PID\tAT\tBT\tWT\tTAT\n\n"
+                );
+
+
+
+
+                for(Process p : processes){
+
+
+
+                    result.append(
+                    "P"
+                    )
+                    .append(
+                    p.getPid()
+                    )
+                    .append("\t")
+                    .append(
+                    p.getArrivalTime()
+                    )
+                    .append("\t")
+                    .append(
+                    p.getBurstTime()
+                    )
+                    .append("\t")
+                    .append(
+                    p.getWaitingTime()
+                    )
+                    .append("\t")
+                    .append(
+                    p.getTurnaroundTime()
+                    )
+                    .append("\n");
+
+
+                }
+
+
+
+
+
+                result.append(
+                "\n\nExecution Completed Successfully\n"
+                );
+
+
+
+
+
+                ResultWriter.write(
+
+                algorithmName + "_Result.txt",
+
+                result.toString()
+
+                );
+
+
+
             }
+
 
 
 
@@ -270,5 +370,6 @@ public class Main {
 
 
     }
+
 
 }

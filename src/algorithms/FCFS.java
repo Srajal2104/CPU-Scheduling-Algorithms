@@ -30,8 +30,7 @@ public class FCFS implements Scheduler {
         int time = 0;
 
 
-        ArrayList<String> chart =
-                new ArrayList<>();
+        chart.clear();
 
 
 
@@ -48,7 +47,7 @@ public class FCFS implements Scheduler {
 
 
             chart.add(
-            p.toString()
+                p.toString()
             );
 
 
@@ -67,6 +66,7 @@ public class FCFS implements Scheduler {
 
 
 
+
         System.out.println(
         "\n========== FCFS =========="
         );
@@ -80,5 +80,8 @@ public class FCFS implements Scheduler {
 
 
     }
+
+
+
 
 }

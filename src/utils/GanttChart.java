@@ -9,33 +9,61 @@ public class GanttChart {
 
 
 
-    public static void display(
+    public static String generate(
             ArrayList<String> chart
     ){
 
 
+        StringBuilder sb =
+                new StringBuilder();
 
-        System.out.println(
-        "\n========== GANTT CHART ==========");
+
+
+        sb.append(
+        "\n========== GANTT CHART ==========\n"
+        );
 
 
 
         for(String s : chart){
 
 
-            System.out.print(
-            "| "+s+" "
-            );
+            sb.append(
+            "| "
+            )
+            .append(s)
+            .append(" ");
 
 
         }
 
 
-        System.out.println("|");
+
+        sb.append("|\n");
+
+
+
+        sb.append(
+        "=================================\n"
+        );
+
+
+
+        return sb.toString();
+
+    }
+
+
+
+
+
+    public static void display(
+            ArrayList<String> chart
+    ){
 
 
         System.out.println(
-        "================================="
+            generate(chart)
         );
 
 

@@ -4,12 +4,9 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-
-
 import models.Process;
-
-import utils.Metrics;
 import utils.GanttChart;
+import utils.Metrics;
 
 
 
