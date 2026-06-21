@@ -2,6 +2,7 @@ import algorithms.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import models.Process;
+import utils.Comparison;
 import utils.GanttChart;
 import utils.ResultWriter;
 
@@ -114,6 +115,7 @@ public class Main {
             System.out.println("12. Aging");
             System.out.println("13. EDF");
             System.out.println("14. Rate Monotonic");
+            System.out.println("15. Compare Algorithms");
 
 
 
@@ -123,6 +125,21 @@ public class Main {
 
 
             int choice = sc.nextInt();
+
+
+
+            // comparison option
+
+            if(choice == 15){
+
+
+                Comparison.run(processes);
+
+                return;
+
+            }
+
+
 
 
 
@@ -136,7 +153,6 @@ public class Main {
 
 
                 case 2 -> {
-
 
                     System.out.print(
                     "Enter Time Quantum : "
@@ -239,9 +255,11 @@ public class Main {
 
 
 
+
                 String algorithmName =
                 scheduler.getClass()
                 .getSimpleName();
+
 
 
 
@@ -257,11 +275,9 @@ public class Main {
                 "====================================\n"
                 );
 
-
                 result.append(
                 " CPU SCHEDULING RESULT\n"
                 );
-
 
                 result.append(
                 "====================================\n\n"
@@ -279,8 +295,6 @@ public class Main {
 
 
 
-                // GANTT CHART SAVE
-
                 result.append(
                 GanttChart.generate(
                     scheduler.getChart()
@@ -295,10 +309,10 @@ public class Main {
                 "\nProcess Details\n"
                 );
 
+
                 result.append(
                 "------------------------------------\n"
                 );
-
 
 
                 result.append(
@@ -308,36 +322,27 @@ public class Main {
 
 
 
-                for(Process p : processes){
 
+                for(Process p : processes){
 
 
                     result.append(
                     "P"
                     )
-                    .append(
-                    p.getPid()
-                    )
+                    .append(p.getPid())
                     .append("\t")
-                    .append(
-                    p.getArrivalTime()
-                    )
+                    .append(p.getArrivalTime())
                     .append("\t")
-                    .append(
-                    p.getBurstTime()
-                    )
+                    .append(p.getBurstTime())
                     .append("\t")
-                    .append(
-                    p.getWaitingTime()
-                    )
+                    .append(p.getWaitingTime())
                     .append("\t")
-                    .append(
-                    p.getTurnaroundTime()
-                    )
+                    .append(p.getTurnaroundTime())
                     .append("\n");
 
 
                 }
+
 
 
 
@@ -353,15 +358,15 @@ public class Main {
 
                 ResultWriter.write(
 
-                algorithmName + "_Result.txt",
+                algorithmName+"_Result.txt",
 
                 result.toString()
 
                 );
 
 
-
             }
+
 
 
 

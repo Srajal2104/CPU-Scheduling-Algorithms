@@ -24,7 +24,7 @@ public class Metrics {
         }
 
 
-        return sum/list.size();
+        return sum / list.size();
 
     }
 
@@ -46,9 +46,36 @@ public class Metrics {
         }
 
 
-        return sum/list.size();
+        return sum / list.size();
 
     }
+
+
+
+
+
+    // For Comparison Module
+
+    public static double averageWaiting(
+            ArrayList<Process> list
+    ){
+
+        return averageWaitingTime(list);
+
+    }
+
+
+
+
+
+    public static double averageTurnaround(
+            ArrayList<Process> list
+    ){
+
+        return averageTurnaroundTime(list);
+
+    }
+
 
 
 
@@ -91,18 +118,21 @@ public class Metrics {
 
 
 
+
+
         System.out.println(
         "\nAverage Waiting Time : "
-        +averageWaitingTime(list)
+        + averageWaitingTime(list)
         );
 
 
 
         System.out.println(
         "Average Turnaround Time : "
-        +averageTurnaroundTime(list)
+        + averageTurnaroundTime(list)
         );
 
     }
+
 
 }
