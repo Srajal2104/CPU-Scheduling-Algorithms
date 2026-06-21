@@ -13,10 +13,12 @@ import utils.Metrics;
 public class MLFQ implements Scheduler {
 
 
+
     @Override
     public void schedule(
             ArrayList<Process> processes
     ){
+
 
 
         Queue<Process> q1 =
@@ -27,19 +29,35 @@ public class MLFQ implements Scheduler {
                 new LinkedList<>();
 
 
-        ArrayList<String> chart =
+
+        chart.clear();
+
+
+
+        ArrayList<Integer> remaining =
                 new ArrayList<>();
 
 
-        int time = 0;
+
+        for(Process p : processes){
 
 
+            q1.add(
+                p.copy()
+            );
 
-        for(Process p:processes){
 
-            q1.add(p.copy());
+            remaining.add(
+                p.getBurstTime()
+            );
 
         }
+
+
+
+
+
+        int time = 0;
 
 
 
@@ -54,20 +72,35 @@ public class MLFQ implements Scheduler {
 
             if(!q1.isEmpty()){
 
-                current=q1.poll();
+                current = q1.poll();
 
             }
             else{
 
-                current=q2.poll();
+                current = q2.poll();
 
             }
 
 
 
-            chart.add(
-            current.toString()
+            int index =
+            processes.indexOf(
+                processes.stream()
+                .filter(x ->
+                    x.getPid()
+                    ==
+                    current.getPid()
+                )
+                .findFirst()
+                .get()
             );
+
+
+
+            chart.add(
+                current.toString()
+            );
+
 
 
 
@@ -77,8 +110,8 @@ public class MLFQ implements Scheduler {
 
             int run =
             Math.min(
-            quantum,
-            current.getBurstTime()
+                quantum,
+                remaining.get(index)
             );
 
 
@@ -87,11 +120,21 @@ public class MLFQ implements Scheduler {
 
 
 
-            if(run <
-            current.getBurstTime()){
+            remaining.set(
+                index,
+                remaining.get(index)-run
+            );
+
+
+
+
+
+            if(remaining.get(index)>0){
+
 
 
                 q2.add(current);
+
 
 
             }
@@ -103,10 +146,13 @@ public class MLFQ implements Scheduler {
                 current.calculateTimes();
 
 
+
             }
 
 
+
         }
+
 
 
 
@@ -116,7 +162,9 @@ public class MLFQ implements Scheduler {
         );
 
 
+
         GanttChart.display(chart);
+
 
 
         Metrics.display(processes);
@@ -124,6 +172,7 @@ public class MLFQ implements Scheduler {
 
 
     }
+
 
 
 }
